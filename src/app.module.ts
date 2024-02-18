@@ -7,6 +7,7 @@ import { PrismaModule, loggingMiddleware } from 'nestjs-prisma';
 import { configuration, loggerOptions } from './configs';
 import { CommonModule } from './common';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
       rootPath: `${__dirname}/../public`,
       renderPath: '/',
     }),
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
