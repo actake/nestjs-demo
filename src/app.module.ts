@@ -1,6 +1,4 @@
 import { Logger, Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { LoggerModule } from 'nestjs-pino';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaModule, loggingMiddleware } from 'nestjs-prisma';
@@ -8,6 +6,7 @@ import { configuration, loggerOptions } from './configs';
 import { CommonModule } from './common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -27,6 +26,7 @@ import { UsersModule } from './users/users.module';
         ],
       },
     }),
+    AuthModule,
     CommonModule,
     ServeStaticModule.forRoot({
       rootPath: `${__dirname}/../public`,
@@ -34,7 +34,6 @@ import { UsersModule } from './users/users.module';
     }),
     UsersModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  providers: [],
 })
 export class AppModule {}
