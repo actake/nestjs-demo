@@ -6,10 +6,16 @@ import {
   Patch,
   Param,
   Delete,
+  HttpException,
+  HttpStatus,
+  UseFilters,
 } from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
+import {
+  /* EverythingExceptionFilter, */ HttpExceptionFilter,
+} from 'src/common';
 
 @Controller('cats')
 export class CatsController {
@@ -21,7 +27,20 @@ export class CatsController {
   }
 
   @Get()
+  @UseFilters(HttpExceptionFilter)
+  // @UseFilters(EverythingExceptionFilter)
   findAll() {
+    throw new HttpException(
+      {
+        status: HttpStatus.FORBIDDEN,
+        error: 'This is a custom message',
+      },
+      HttpStatus.FORBIDDEN,
+      {
+        cause: 'error',
+      },
+    );
+    throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
     return this.catsService.findAll();
   }
 
